@@ -7,6 +7,7 @@ use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookingConfirmationMail;
+use App\Mail\BookingNotificationToAdmin;
 
 class EmailController extends Controller
 {
@@ -26,6 +27,7 @@ class EmailController extends Controller
 
         // Send confirmation email to the user's email address
         Mail::to($user->email)->send(new BookingConfirmationMail($booking));
+        Mail::to('tayyabtahir111@gmail.com')->send(new BookingNotificationToAdmin($booking));
 
         return redirect()->back()->with('message', 'Confirmation email sent to your email address.');
     }
