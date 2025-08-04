@@ -18,13 +18,17 @@ class Booking extends Model
     ];
 
     public function package()
-{
-    return $this->belongsTo(Package::class);
-}
+    {
+        return $this->belongsTo(Package::class);
+    }
 
-public function passengers()
-{
-    return $this->hasMany(Passenger::class);
-}
+    public function passengers()
+    {
+        return $this->hasMany(Passenger::class);
+    }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

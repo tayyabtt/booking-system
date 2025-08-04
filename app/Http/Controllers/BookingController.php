@@ -25,6 +25,18 @@ public function showPaymentForm($id)
     return view('booking.payment', compact('booking'));
 }
 
+
+
+public function pay($id)
+{
+    $booking = Booking::findOrFail($id);
+    $booking->payment_status = 'Paid';
+    $booking->save();
+
+    return redirect()->back()->with('success', 'Payment marked as complete.');
+}
+
+
 public function processDummyPayment(Request $request, $id)
 {
     $booking = Booking::findOrFail($id);

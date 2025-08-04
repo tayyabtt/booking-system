@@ -41,13 +41,20 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('admin.packages.edit', $package) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
-                    </td>
+    <a href="{{ route('admin.packages.edit', $package) }}" class="btn btn-sm btn-warning">Edit</a>
+
+    <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" style="display:inline-block;">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+    </form>
+
+    <form action="{{ route('admin.packages.sendEmail', $package) }}" method="POST" style="display:inline-block;">
+        @csrf
+        <button class="btn btn-sm btn-primary">Send Email</button>
+    </form>
+</td>
+
                 </tr>
             @endforeach
         </tbody>

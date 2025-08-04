@@ -6,8 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\BookingConfirmationMail;
+use App\Mail\PackageDetailsMail;
+use Illuminate\Support\Facades\Mail;
 
 class PackageController extends Controller
+
+
 {
     public function index()
     {
@@ -19,6 +24,25 @@ class PackageController extends Controller
     {
         return view('admin.packages.create');
     }
+public function sendConfirmationEmail($id)
+{
+    $booking = Booking::with('user', 'package')->findOrFail($id);
+    
+    Mail::to($booking->user->email)->send(new BookingConfirmedMail($booking));
+    
+    return back()->with('success', 'Confirmation email sent successfully!');
+}
+
+
+public function sendEmail(Package $package)
+{
+    $user = auth()->user(); // Logged-in user (admin sending to himself/herself for now)
+
+    Mail::to($user->email)->send(new PackageDetailsMail($package));
+
+    return back()->with('success', 'Package details sent to your email.');
+}
+
 
     public function store(Request $request)
     {
